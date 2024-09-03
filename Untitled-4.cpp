@@ -31,24 +31,7 @@ void solve(){
             dfs(i);
         }
     }
-    vector<pair<int, int>> ans; 
-    for (int i = 1; i <= n; i++)
-    {
-        memset(visited, 0, sizeof(visited));
-        visited[i] = 1;
-        int c = 0;
-        for (int j = 1; j <= n; j++)
-        {
-            if(!visited[j]){
-                c++;
-                dfs(j);
-            }
-        }
-        if (c > f) v.push_back(i);
-    }
-    sort(v.begin(), v.end());
-    cout << v.size() << "\n";
-    for (int it : v) cout << it << " ";
+    cout << f ;
 }
 int main() {
     fast;
