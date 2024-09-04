@@ -2,26 +2,37 @@
 using namespace std;
 #define ll long long
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-#define max_in 1000007
 
-int m, n, visited[max_in];
-vector <vector <int>> a(max_in);
+int m, n = 0, visited[1000007], parent[1000007];
+vector <vector <int>> a(1000007);
+set <int> path;
 void input(){
+    path.clear();
+    for(int i = 1; i <= n; i++) a[i].clear();
     cin >> n >> m;
-    for(int i = 0; i <= n; i++) a[i].clear();
     for (int i = 0; i < m; i++)
     {
         int x, y; cin >> x >> y;
         a[x].push_back(y);
-        a[y].push_back(x);
     }
 }
-void solve(){
-    for (int i = 1; i <= n; i++){
-        cout << i << ": ";
-        sort(a[i].begin(), a[i].end());
-        for (int it : a[i]) cout << it << " ";
-        cout << "\n";
+void dfs(int i){
+    visited[i] = 1;
+    for (int it : a[i]) 
+        if(!visited[it]) {
+            parent[it] = i;
+            dfs(it);
+        }
+}
+void solve(int begin, int end){
+    memset(visited, 0, sizeof(visited));
+    memset(parent, 0, sizeof(parent));
+    dfs(begin);
+    if(visited[end]){
+        while(end != begin){
+            path.insert(end);
+            end = parent[end];
+        }
     }
 }
 int main() {
@@ -30,7 +41,9 @@ int main() {
     while (T--)
     {
         input();
-        solve();
+        solve(1, 2);
+        solve(2, 1);
+        cout << path.size() << "\n";
     }
     
 }
