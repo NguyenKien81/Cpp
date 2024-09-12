@@ -9,6 +9,10 @@
         "unordered_set": "cpp",
         "vector": "cpp",
         "any": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "iostream": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "span": "cpp"
     }
 }

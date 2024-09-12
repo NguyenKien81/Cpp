@@ -1,49 +1,47 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define mod 10007
 
-int m, n = 0, visited[1000007], parent[1000007];
-vector <vector <int>> a(1000007);
-set <int> path;
-void input(){
-    path.clear();
-    for(int i = 1; i <= n; i++) a[i].clear();
-    cin >> n >> m;
-    for (int i = 0; i < m; i++)
-    {
-        int x, y; cin >> x >> y;
-        a[x].push_back(y);
-    }
+int GCD(int a, int b) {
+    if (a < b) return GCD(b, a);
+    if (!b) return a;
+    return GCD(b, a % b);
 }
-void dfs(int i){
-    visited[i] = 1;
-    for (int it : a[i]) 
-        if(!visited[it]) {
-            parent[it] = i;
-            dfs(it);
-        }
+
+int LCM(int a, int b) {
+    return (a / GCD(a, b) * b) % mod;
 }
-void solve(int begin, int end){
-    memset(visited, 0, sizeof(visited));
-    memset(parent, 0, sizeof(parent));
-    dfs(begin);
-    if(visited[end]){
-        while(end != begin){
-            path.insert(end);
-            end = parent[end];
-        }
-    }
-}
+
 int main() {
     fast;
-	int T; cin >> T;
-    while (T--)
+    int T;
+    cin >> T;
+    for (int t = 0; t < T; t++)
     {
-        input();
-        solve(1, 2);
-        solve(2, 1);
-        cout << path.size() << "\n";
+        int n; cin >> n;
+        int a[n], sum = 0;
+        for (int &it : a) cin >> it;
+        int l = 0;
+        while (l < n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                int tmp = a[i];
+                for (int j = 0; j + l < n; j++)
+                {
+                    tmp = LCM(tmp, a[j]);
+                }
+                if(i + l < n){
+                    cout << tmp << " ";
+                    sum += tmp;
+                }
+            }
+            l++;
+            cout << "\n";
+        }
+        cout << sum << "\n";
     }
+    
     
 }
