@@ -43,11 +43,6 @@ int main() {
         input();
         int sum = 0;
         for (int i = 1; i <= k; i++) sum += count(i);
-        for (int i = 0; i < n; i++)
-        {
-            cout << color[i + 1] << " ";
-        }
-        
         if(sum != n) cout << "NO\n";
         else cout << "YES\n";
     }
