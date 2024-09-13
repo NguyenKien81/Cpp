@@ -1,47 +1,61 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-#define mod 10007
 
-int GCD(int a, int b) {
-    if (a < b) return GCD(b, a);
-    if (!b) return a;
-    return GCD(b, a % b);
+int m, n, k, c, used[1000007], born[1000007];
+vector <vector <int>> adj;
+vector <pair <int, int>> tree;
+queue <int> qu;
+
+void input ()
+{
+    tree.clear();
+    for (int i = 1; i <= n; i++) adj[i].clear();
+    cin >> n >> m >> k;
+    c = n - 1;
+    adj.assign(n + 1, vector <int>());
+    for (int i = 0; i < m; i++)
+    {
+        int x, y; cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
 }
-
-int LCM(int a, int b) {
-    return (a / GCD(a, b) * b) % mod;
+void bfs(int i){
+    used[i] = 1;
+    qu.push(i);
+    while (!qu.empty())
+    {
+        int j = qu.front(); qu.pop();
+        for (int it : adj[j]){
+            if(!used[it]){
+                used[it] = 1;
+                qu.push(it);
+                if(c--) tree.push_back({j, it});
+            }
+        }
+    }
 }
 
 int main() {
     fast;
-    int T;
-    cin >> T;
-    for (int t = 0; t < T; t++)
+    int T; cin >> T;
+    while (T--)
     {
-        int n; cin >> n;
-        int a[n], sum = 0;
-        for (int &it : a) cin >> it;
-        int l = 0;
-        while (l < n)
+        input();
+        if(m < n - 1) cout << "-1\n";
+        else 
         {
-            for (int i = 0; i < n; i++)
-            {
-                int tmp = a[i];
-                for (int j = 0; j + l < n; j++)
-                {
-                    tmp = LCM(tmp, a[j]);
-                }
-                if(i + l < n){
-                    cout << tmp << " ";
-                    sum += tmp;
-                }
-            }
-            l++;
-            cout << "\n";
+            memset(used, 0, sizeof(used));
+            bfs(k);
+            if(!c)  for (auto it : tree) cout << it.first << " " << it.second << "\n";
+            else cout << "-1\n";
         }
-        cout << sum << "\n";
+        
     }
     
+    
+   
     
 }
